@@ -1,14 +1,7 @@
-import { BarChart3, Bell, LayoutGrid, MessageSquare, Settings } from "lucide-react-native";
+import { Bell } from "lucide-react-native";
 import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../theme/colors";
 
-
-const ACTIONS = [
-    { label: "Mensaje", icon: MessageSquare },
-    { label: "Mis apps", icon: LayoutGrid },
-    { label: "Progreso", icon: BarChart3 },
-    { label: "Ajustes", icon: Settings },
-];
 
 export default function ProgresoScreen({ navigation }) {
     return (

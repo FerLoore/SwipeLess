@@ -41,6 +41,7 @@ export default function HomeScreen({ navigation }) {
             style={styles.actionItem}
             onPress={() => {
               if (a.label === "Progreso") navigation.navigate("ProgresoScreen");
+              if (a.label === "Bloqueo") navigation.navigate("BloqueoScreen");
               // el resto los conectamos cuando migremos esas pantallas
             }}
           >
