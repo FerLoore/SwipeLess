@@ -1,97 +1,109 @@
-import { Bell } from "lucide-react-native";
+// src/screens/ProgresoScreen.js
+import { Flame } from "lucide-react-native";
 import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../theme/colors";
 
+// Datos simulados. Más adelante esto va a venir de AsyncStorage
+// (o de tu backend, cuando sumes la IA) en vez de estar fijo acá.
+const SEMANA = [
+    { dia: "L", minutos: 96 },
+    { dia: "M", minutos: 110 },
+    { dia: "X", minutos: 74 },
+    { dia: "J", minutos: 130 },
+    { dia: "V", minutos: 88 },
+    { dia: "S", minutos: 145 },
+    { dia: "D", minutos: 60 },
+];
 
-export default function ProgresoScreen({ navigation }) {
+const RACHA_ACTUAL = 6;
+const RESPIROS_MOSTRADOS = 23;
+const VECES_VOLVISTE = 9;
+
+const ALTURA_MAX_BARRA = 500; // px, el techo visual del gráfico
+
+export default function ProgresoScreen() {
+    const maxMinutos = Math.max(...SEMANA.map((d) => d.minutos));
+    const mejorDia = SEMANA.reduce((a, b) => (b.minutos > a.minutos ? b : a));
+
     return (
         <View style={styles.container}>
-            {/* Header */}
-            <View style={styles.header}>
-                <View style={styles.headerLeft}>
-                    <View style={styles.avatar}>
-                        <Text style={styles.avatarText}>D</Text>
-                    </View>
-                    <Text style={styles.headerName}>Hola, Diego</Text>
+            <Text style={styles.title}>Tu progreso</Text>
+
+            {/* Racha */}
+            <View style={styles.streakRow}>
+                <View style={styles.streakIconWrap}>
+                    <Flame size={20} color={colors.coral} />
                 </View>
-                <Bell size={20} color={colors.muted} />
+                <View>
+                    <Text style={styles.streakNumber}>{RACHA_ACTUAL} días seguidos</Text>
+                </View>
+            </View>
+
+            {/* Gráfica */}
+            <View style={styles.chartBlock}>
+                <Text style={styles.chartLabel}>Minutos por día</Text>
+                <View style={styles.barsRow}>
+                    {SEMANA.map((d) => {
+                        const alturaPx = Math.max(6, (d.minutos / maxMinutos) * ALTURA_MAX_BARRA);
+                        const esMejorDia = d.dia === mejorDia.dia;
+                        return (
+                            <View
+                                key={d.dia}
+                                style={[
+                                    styles.bar,
+                                    { height: alturaPx, backgroundColor: esMejorDia ? colors.coral : colors.mint },
+                                ]}
+                            />
+                        );
+                    })}
+                </View>
+                <View style={styles.daysRow}>
+                    {SEMANA.map((d) => (
+                        <Text key={d.dia} style={styles.dayLabel}>{d.dia}</Text>
+                    ))}
+                </View>
+            </View>
+
+            {/* Stats */}
+            <View style={styles.statsBlock}>
+                <View style={styles.statRow}>
+                    <Text style={styles.statLabel}>Mensajes mostrados</Text>
+                    <Text style={[styles.statValue, { color: colors.mint }]}>{RESPIROS_MOSTRADOS}</Text>
+                </View>
+                <View style={styles.statRow}>
+                    <Text style={styles.statLabel}>Veces que volviste atrás</Text>
+                    <Text style={[styles.statValue, { color: colors.coral }]}>{VECES_VOLVISTE}</Text>
+                </View>
             </View>
         </View>
-
-
     );
 }
 
-
-
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: colors.bg },
-    header: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingHorizontal: 20,
-        paddingTop: 16,
-        paddingBottom: 18,
-    },
-    headerLeft: { flexDirection: "row", alignItems: "center", gap: 8 },
-    avatar: {
-        width: 30, height: 30, borderRadius: 15,
-        backgroundColor: colors.mint,
+    container: { flex: 1, backgroundColor: colors.bg, paddingHorizontal: 20, paddingTop: 16 },
+    title: { fontSize: 18, fontWeight: "500", color: colors.text, marginBottom: 16 },
+
+    streakRow: { flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 20 },
+    streakIconWrap: {
+        width: 44, height: 44, borderRadius: 14,
+        backgroundColor: colors.mint + "1A",
         alignItems: "center", justifyContent: "center",
     },
-    avatarText: { fontSize: 12, fontWeight: "600", color: colors.bg },
-    headerName: { fontSize: 13, color: colors.text },
+    streakNumber: { fontSize: 15, color: colors.text },
+    streakSub: { fontSize: 11, color: colors.muted },
 
-    streakBlock: { paddingHorizontal: 20, paddingBottom: 18 },
-    streakLabel: { fontSize: 11, color: colors.muted, marginBottom: 4 },
-    streakRow: { flexDirection: "row", alignItems: "baseline", gap: 6 },
-    streakNumber: { fontSize: 34, fontWeight: "600", color: colors.text },
-    streakSuffix: { fontSize: 14, color: colors.text },
+    chartBlock: { marginBottom: 20 },
+    chartLabel: { fontSize: 10, letterSpacing: 0.5, textTransform: "uppercase", color: colors.muted, marginBottom: 12 },
+    barsRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end", height: ALTURA_MAX_BARRA },
+    bar: { width: 18, borderTopLeftRadius: 5, borderTopRightRadius: 5 },
+    daysRow: { flexDirection: "row", justifyContent: "space-between", paddingTop: 6 },
+    dayLabel: { fontSize: 10, color: colors.muted, width: 18, textAlign: "center" },
 
-    actionsRow: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingHorizontal: 20,
-        paddingBottom: 20,
+    statsBlock: { gap: 10 },
+    statRow: {
+        flexDirection: "row", justifyContent: "space-between", alignItems: "center",
+        backgroundColor: "#171B26", borderRadius: 16, padding: 14,
     },
-    actionItem: { alignItems: "center", gap: 6 },
-    actionCircle: {
-        width: 52, height: 52, borderRadius: 26,
-        backgroundColor: colors.mint,
-        alignItems: "center", justifyContent: "center",
-    },
-    actionLabel: { fontSize: 10, color: colors.text },
-
-    card: {
-        flex: 1,
-        backgroundColor: colors.card,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        padding: 20,
-    },
-    cardHeader: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: 10,
-    },
-    cardTitle: { fontSize: 12, fontWeight: "600", color: colors.textDark },
-    cardLink: { fontSize: 11, color: "#69C4A8" },
-    movementRow: {
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 12,
-        backgroundColor: colors.cardWhite,
-        borderRadius: 16,
-        padding: 12,
-    },
-    movementIcon: {
-        width: 34, height: 34, borderRadius: 10,
-        backgroundColor: "#E1B3A6",
-        alignItems: "center", justifyContent: "center",
-    },
-    movementApp: { fontSize: 13, color: colors.textDark },
-    movementMeta: { fontSize: 11, color: colors.muted },
+    statLabel: { fontSize: 13, color: colors.text },
+    statValue: { fontSize: 14, fontWeight: "600" },
 });
-
