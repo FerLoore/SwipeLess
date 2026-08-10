@@ -42,6 +42,7 @@ export default function HomeScreen({ navigation }) {
             style={styles.actionItem}
             onPress={() => {
               if (a.label === "Mensaje") navigation.navigate("MensajeScreen");
+              if (a.label === "Progreso") navigation.navigate("ProgresoScreen");
               // el resto los conectamos cuando migremos esas pantallas
             }}
           >
