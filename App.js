@@ -3,7 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import TabNavigator from "./src/navigation/TabNavigator";
-import MensajeScreen from "./src/screens/mensajeScreen";
 import ProgresoScreen from "./src/screens/ProgresoScreen";
 
 const Stack = createNativeStackNavigator();
@@ -14,12 +13,6 @@ export default function App() {
       <StatusBar style="light" />
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Tabs" component={TabNavigator} />
-        <Stack.Screen
-          name="MensajeScreen"
-          component={MensajeScreen}
-          options={{ presentation: "fullScreenModal" }}
-        />
-
         <Stack.Screen
           name="ProgresoScreen"
           component={ProgresoScreen}

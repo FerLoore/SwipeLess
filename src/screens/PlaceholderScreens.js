@@ -4,17 +4,9 @@
 // el mismo patrón que HomeScreen.js: import de colors, StyleSheet,
 // componentes de lucide-react-native.
 
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../theme/colors";
 
-export function ProgresoScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Progreso — próxima pantalla a construir</Text>
-    </View>
-  );
-}
 
 export function AjustesScreen() {
   return (

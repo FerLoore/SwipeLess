@@ -1,9 +1,8 @@
 // src/navigation/TabNavigator.js
-import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Home, BarChart3, Settings } from "lucide-react-native";
+import { Home, Settings } from "lucide-react-native";
 import HomeScreen from "../screens/HomeScreen";
-import { ProgresoScreen, AjustesScreen } from "../screens/PlaceholderScreens";
+import { AjustesScreen } from "../screens/PlaceholderScreens";
 import { colors } from "../theme/colors";
 
 const Tab = createBottomTabNavigator();
@@ -24,11 +23,7 @@ export default function TabNavigator() {
         component={HomeScreen}
         options={{ tabBarIcon: ({ color, size }) => <Home color={color} size={size} /> }}
       />
-      <Tab.Screen
-        name="Progreso"
-        component={ProgresoScreen}
-        options={{ tabBarIcon: ({ color, size }) => <BarChart3 color={color} size={size} /> }}
-      />
+
       <Tab.Screen
         name="Ajustes"
         component={AjustesScreen}
