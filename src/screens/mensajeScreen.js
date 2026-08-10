@@ -1,6 +1,6 @@
-// src/screens/RespiroScreen.js
-import React, { useEffect, useRef, useState } from "react";
-import { View, Text, StyleSheet, Pressable, Animated } from "react-native";
+// src/screens/swipeLess.js
+import { useEffect, useRef, useState } from "react";
+import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../theme/colors";
 
 const DURATION = 5;
@@ -11,7 +11,7 @@ const PHRASES = [
   "¿Es esto lo que querías hacer ahora?",
 ];
 
-export default function RespiroScreen({ navigation, route }) {
+export default function MensajeScreen({ navigation, route }) {
   const appName = route?.params?.appName ?? "Instagram";
   const [remaining, setRemaining] = useState(DURATION);
   const [phrase] = useState(PHRASES[Math.floor(Math.random() * PHRASES.length)]);

@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import TabNavigator from "./src/navigation/TabNavigator";
-import RespiroScreen from "./src/screens/swipeLessScreen";
+import MensajeScreen from "./src/screens/mensajeScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,8 +14,8 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Tabs" component={TabNavigator} />
         <Stack.Screen
-          name="Respiro"
-          component={RespiroScreen}
+          name="MensajeScreen"
+          component={MensajeScreen}
           options={{ presentation: "fullScreenModal" }}
         />
       </Stack.Navigator>

@@ -1,11 +1,10 @@
 // src/screens/HomeScreen.js
-import React from "react";
-import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
-import { Bell, Flame, Wind, LayoutGrid, BarChart3, Settings, ChevronRight, Camera } from "lucide-react-native";
+import { BarChart3, Bell, Camera, ChevronRight, Flame, LayoutGrid, MessageSquare, Settings } from "lucide-react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { colors } from "../theme/colors";
 
 const ACTIONS = [
-  { label: "Respirar", icon: Wind },
+  { label: "Mensaje", icon: MessageSquare },
   { label: "Mis apps", icon: LayoutGrid },
   { label: "Progreso", icon: BarChart3 },
   { label: "Ajustes", icon: Settings },
@@ -42,7 +41,7 @@ export default function HomeScreen({ navigation }) {
             key={a.label}
             style={styles.actionItem}
             onPress={() => {
-              if (a.label === "Respirar") navigation.navigate("Respiro");
+              if (a.label === "Mensaje") navigation.navigate("MensajeScreen");
               // el resto los conectamos cuando migremos esas pantallas
             }}
           >
