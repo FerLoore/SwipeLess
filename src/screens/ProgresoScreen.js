@@ -1,6 +1,6 @@
 // src/screens/ProgresoScreen.js
-import { Flame } from "lucide-react-native";
-import { StyleSheet, Text, View } from "react-native";
+import { ArrowLeft, Flame } from "lucide-react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../theme/colors";
 
 // Datos simulados. Más adelante esto va a venir de AsyncStorage
@@ -21,12 +21,17 @@ const VECES_VOLVISTE = 9;
 
 const ALTURA_MAX_BARRA = 500; // px, el techo visual del gráfico
 
-export default function ProgresoScreen() {
+export default function ProgresoScreen({ navigation }) {
     const maxMinutos = Math.max(...SEMANA.map((d) => d.minutos));
     const mejorDia = SEMANA.reduce((a, b) => (b.minutos > a.minutos ? b : a));
 
     return (
         <View style={styles.container}>
+            <View style={styles.header}>
+                <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <ArrowLeft size={24} color={colors.text} />
+                </Pressable>
+            </View>
             <Text style={styles.title}>Tu progreso</Text>
 
             {/* Racha */}
@@ -80,7 +85,7 @@ export default function ProgresoScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: colors.bg, paddingHorizontal: 20, paddingTop: 16 },
+    container: { flex: 1, backgroundColor: colors.bg, paddingHorizontal: 20, paddingTop: 50, paddingBottom: 24 },
     title: { fontSize: 18, fontWeight: "500", color: colors.text, marginBottom: 16 },
 
     streakRow: { flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 20 },
@@ -106,4 +111,13 @@ const styles = StyleSheet.create({
     },
     statLabel: { fontSize: 13, color: colors.text },
     statValue: { fontSize: 14, fontWeight: "600" },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 8,
+    },
+    backButton: {
+        padding: 8,
+        marginLeft: -8,
+    },
 });

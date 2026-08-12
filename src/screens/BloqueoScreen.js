@@ -7,7 +7,7 @@
 // adelante (Fase 2). Por ahora es la lógica y el estado; la aplicación
 // real del bloqueo se conecta después.
 
-import { Camera, Check, Film, Lock, LockOpen, MessageCircle, Music2 } from "lucide-react-native";
+import { ArrowLeft, Camera, Check, Film, Lock, LockOpen, MessageCircle, Music2 } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { colors } from "../theme/colors";
@@ -27,7 +27,7 @@ const DURACIONES = [
     { label: "2 h", minutos: 120 },
 ];
 
-export default function BloqueoScreen() {
+export default function BloqueoScreen({ navigation }) {
     const [seleccionadas, setSeleccionadas] = useState([]);
     const [duracion, setDuracion] = useState(DURACIONES[1]); // 30 min por defecto
     const [bloqueoActivo, setBloqueoActivo] = useState(null); // { apps: [...], hasta: timestamp }
@@ -87,6 +87,11 @@ export default function BloqueoScreen() {
         const appsBloqueadas = APPS.filter((a) => bloqueoActivo.apps.includes(a.id));
         return (
             <View style={styles.container}>
+                <View style={styles.header}>
+                    <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
+                        <ArrowLeft size={24} color={colors.text} />
+                    </Pressable>
+                </View>
                 <View style={styles.activeWrap}>
                     <View style={styles.lockCircle}>
                         <Lock size={28} color={colors.bg} />
@@ -113,6 +118,11 @@ export default function BloqueoScreen() {
     // --- Vista: armar un bloqueo nuevo ---
     return (
         <View style={styles.container}>
+            <View style={styles.header}>
+                <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <ArrowLeft size={24} color={colors.text} />
+                </Pressable>
+            </View>
             <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
                 <Text style={styles.title}>Bloqueo</Text>
                 <Text style={styles.subtitle}>Elegí qué apps silenciar y por cuánto tiempo.</Text>
@@ -205,4 +215,13 @@ const styles = StyleSheet.create({
 
     cancelBtn: { flexDirection: "row", gap: 6, alignItems: "center", justifyContent: "center", paddingVertical: 12 },
     cancelBtnText: { fontSize: 12, color: colors.muted },
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 8,
+    },
+    backButton: {
+        padding: 8,
+        marginLeft: -8,
+    },
 });

@@ -1,10 +1,4 @@
 // src/utils/storage.js
-// Wrapper chiquito sobre AsyncStorage para no repetir try/catch
-// y JSON.stringify/parse en cada pantalla.
-//
-// Instalar antes de usar esto:
-// npx expo install @react-native-async-storage/async-storage
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export async function guardar(key, value) {
@@ -25,8 +19,17 @@ export async function cargar(key, valorPorDefecto) {
     }
 }
 
-// Nombres de keys centralizados, así no hay typos entre pantallas.
+// Para listas que van creciendo (como las capturas de palabra):
+// lee la lista actual, le agrega el item nuevo, y guarda todo de nuevo.
+export async function agregar(key, item) {
+    const lista = await cargar(key, []);
+    const nuevaLista = [...lista, item];
+    await guardar(key, nuevaLista);
+    return nuevaLista;
+}
+
 export const KEYS = {
     VIGILADAS: "swipeless:vigiladas",
     BLOQUEO: "swipeless:bloqueoActivo",
+    CAPTURAS: "swipeless:capturas", // array de { palabra, app, accion, fecha }
 };
