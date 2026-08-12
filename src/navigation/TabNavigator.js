@@ -1,8 +1,8 @@
 // src/navigation/TabNavigator.js
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home, Settings } from "lucide-react-native";
+import AjustesScreen from "../screens/AjustesScreen";
 import HomeScreen from "../screens/HomeScreen";
-import { AjustesScreen } from "../screens/PlaceholderScreens";
 import { colors } from "../theme/colors";
 
 const Tab = createBottomTabNavigator();
